@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Amanbng.Linux/Amanbng.Linux.csproj" />
+  <Project Path="Amanbng.Linux.Tests/Amanbng.Linux.Tests.csproj" />
+</Solution>

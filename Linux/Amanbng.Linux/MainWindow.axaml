@@ -1,0 +1,199 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Amanbng.Linux.MainWindow"
+        Title="牛逼工具箱 · Linux" Width="1060" Height="740"
+        MinWidth="800" MinHeight="580" Background="#F3F6FB"
+        WindowStartupLocation="CenterScreen">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <Border Background="White" Padding="26,20" BorderBrush="#E1E7F0" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="3">
+          <TextBlock Text="牛逼工具箱" FontSize="24" FontWeight="Bold" Foreground="#17243B" />
+          <TextBlock Text="AMANBNG  /  LINUX EDITION" FontSize="11" Foreground="#52637A" LetterSpacing="2" />
+        </StackPanel>
+        <CheckBox x:Name="SoundToggle" Grid.Column="1" Content="音效" IsChecked="True"
+                  VerticalAlignment="Center" IsCheckedChanged="OnSoundChanged" />
+      </Grid>
+    </Border>
+    <TabControl x:Name="Tools" Grid.Row="1" TabStripPlacement="Left" Margin="12,20,24,20"
+                SelectionChanged="OnToolChanged">
+      <TabItem Header="欢迎使用">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <Border Classes="card" Background="#172B50" Padding="32">
+              <StackPanel Spacing="16">
+                <TextBlock Text="现在，&#10;重新定义“工具箱”" FontSize="36" FontWeight="Bold" Foreground="White" />
+                <TextBlock Text="七种功能，一本正经地解决一些并不存在的问题。" Foreground="#CDDDF6" TextWrapping="Wrap" />
+                <Button x:Name="ExploreButton" Content="开始体验 →" Click="OnExplore" Margin="0,10,0,0"
+                        Background="White" Foreground="#17243B" />
+              </StackPanel>
+            </Border>
+            <Border Classes="card">
+              <StackPanel Spacing="16">
+                <TextBlock Text="熟悉的配方，来到 Linux" FontSize="21" FontWeight="SemiBold" />
+                <TextBlock Classes="hint" Text="受 B 站 @奥文同学 视频启发的娱乐工具合集。选一个左侧工具试试，保留原版的图片、音效和小玩笑。" />
+                <WrapPanel>
+                  <Button Content="体验内测彩蛋" Click="OnEasterEgg" Margin="0,0,12,12" />
+                  <Button Content="原版背景视频" Click="OnBackgroundVideo" Margin="0,0,12,12" />
+                  <Button Content="项目主页 ↗" Click="OnProject" Margin="0,0,0,12" />
+                </WrapPanel>
+                <TextBlock Classes="hint" FontSize="12" Text="Amanbng · zhweaa / Lnetface · Apache-2.0&#10;Linux 移植版 1.0.0" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="超级读卡器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="超级读卡器" />
+            <TextBlock Classes="hint" Text="把卡片放在按钮上，然后开始读卡。" />
+            <Border Classes="card">
+              <StackPanel Spacing="24">
+                <Button x:Name="ReadCardButton" Classes="primary" Content="开始读卡" Click="OnReadCard"
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" MinHeight="130" />
+                <TextBlock x:Name="CardResult" Classes="result" Text="等待你的卡片…" HorizontalAlignment="Center" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="身高计算器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="身高计算器" />
+            <TextBlock Classes="hint" Text="只需要告诉我们你的身高，就能算出你的身高。" />
+            <Border Classes="card">
+              <StackPanel Spacing="18">
+                <Label Content="你的身高（厘米）" Target="{Binding #HeightInput}" />
+                <TextBox x:Name="HeightInput" Watermark="例如：175" MaxLength="40" />
+                <Button x:Name="HeightButton" Classes="primary" Content="开始计算" Click="OnCalculateHeight" />
+                <ProgressBar x:Name="HeightProgress" IsVisible="False" IsIndeterminate="True" Height="5" />
+                <TextBlock x:Name="HeightResult" Classes="result" Text="等待计算" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="时间查看器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock x:Name="TimeTitle" Classes="title" Text="时间查看器" />
+            <TextBlock Classes="hint" Text="现在几点了？让互联网来告诉你。" />
+            <Border Classes="card">
+              <StackPanel Spacing="18">
+                <Label Content="显示语言" Target="{Binding #TimeLanguage}" />
+                <ComboBox x:Name="TimeLanguage" SelectedIndex="0" SelectionChanged="OnLanguageChanged" MinWidth="210">
+                  <ComboBoxItem Content="中文（简体）" />
+                  <ComboBoxItem Content="English" />
+                  <ComboBoxItem Content="日本語" />
+                  <ComboBoxItem Content="한국인" />
+                </ComboBox>
+                <Button x:Name="TimeButton" Classes="primary" Content="查看时间" Click="OnCheckTime" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="手机定位器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="手机定位器" />
+            <TextBlock Classes="hint" Text="你，难道还在担心手机找不着的烦恼吗？" />
+            <Border Classes="card">
+              <StackPanel Spacing="18">
+                <Label Content="手机的位置" Target="{Binding #PhoneInput}" />
+                <TextBox x:Name="PhoneInput" Watermark="例如：沙发上" MaxLength="200" />
+                <CheckBox x:Name="AdvancedSearch" Content="启用高级查找" />
+                <Button x:Name="PhoneButton" Classes="primary" Content="立即尝试！" Click="OnLocatePhone" />
+                <ProgressBar x:Name="PhoneProgress" IsVisible="False" IsIndeterminate="True" Height="5" />
+                <TextBlock x:Name="PhoneResult" Classes="result" Text="等待定位" />
+                <Image x:Name="PhonePicture" Source="/Assets/listN4ico_Maining.jpg" IsVisible="False"
+                       Height="150" Width="150" HorizontalAlignment="Left" Stretch="Uniform" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="字符拼接器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="字符拼接器" />
+            <TextBlock Classes="hint" Text="一段文字，加上另一段文字。就是这么简单。" />
+            <Border Classes="card">
+              <StackPanel Spacing="16">
+                <Label Content="字段 1" Target="{Binding #FirstText}" />
+                <TextBox x:Name="FirstText" Watermark="第一段文字" MaxLength="10000" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="130" />
+                <Label Content="字段 2" Target="{Binding #SecondText}" />
+                <TextBox x:Name="SecondText" Watermark="第二段文字" MaxLength="10000" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="130" />
+                <Button x:Name="JoinButton" Classes="primary" Content="GO · 拼接" Click="OnJoin" />
+                <TextBox x:Name="JoinedText" Watermark="结果会出现在这里，可选中复制" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="160" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="剪刀石头布">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="剪刀石头布" />
+            <TextBlock Classes="hint" Text="对手已经就绪，接下来轮到你了。" />
+            <Border Classes="card">
+              <StackPanel Spacing="22">
+                <WrapPanel>
+                  <ComboBox x:Name="Difficulty" SelectedIndex="0" SelectionChanged="OnDifficultyChanged" MinWidth="160" Margin="0,0,12,8">
+                    <ComboBoxItem Content="简单" />
+                    <ComboBoxItem Content="普通" />
+                    <ComboBoxItem Content="困难" />
+                  </ComboBox>
+                  <Button x:Name="NewRoundButton" Content="再来一局" Click="OnNewRound" Margin="0,0,0,8" />
+                </WrapPanel>
+                <Grid ColumnDefinitions="*,Auto,*">
+                  <StackPanel Spacing="12" HorizontalAlignment="Center">
+                    <TextBlock Text="AI" HorizontalAlignment="Center" />
+                    <Image x:Name="OpponentImage" Width="96" Height="96" Stretch="Uniform" />
+                    <TextBlock x:Name="OpponentText" HorizontalAlignment="Center" />
+                  </StackPanel>
+                  <TextBlock Grid.Column="1" Text="VS" VerticalAlignment="Center" FontSize="22" Foreground="#52637A" Margin="16" />
+                  <StackPanel Grid.Column="2" Spacing="12" HorizontalAlignment="Center">
+                    <TextBlock Text="玩家" HorizontalAlignment="Center" />
+                    <Image x:Name="PlayerImage" Source="/Assets/SetNone.png" Width="96" Height="96" Stretch="Uniform" />
+                    <TextBlock x:Name="PlayerText" Text="正在选择" HorizontalAlignment="Center" />
+                  </StackPanel>
+                </Grid>
+                <WrapPanel>
+                  <Button x:Name="ScissorsButton" Content="剪刀" Click="OnScissors" Margin="0,0,12,8" />
+                  <Button x:Name="RockButton" Content="石头" Click="OnRock" Margin="0,0,12,8" />
+                  <Button x:Name="PaperButton" Content="布" Click="OnPaper" Margin="0,0,0,8" />
+                </WrapPanel>
+                <TextBlock x:Name="GameResult" Classes="result" Text="请选择你的出招" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="电子功德器">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="22" Margin="20,0,0,0">
+            <TextBlock Classes="title" Text="电子功德器" />
+            <TextBlock Classes="hint" Text="敲一下木鱼，功德 +1。点击木鱼图片可清零。" />
+            <Border Classes="card">
+              <StackPanel Spacing="22">
+                <TextBlock x:Name="MeritCount" Classes="result" Text="功德数：0" HorizontalAlignment="Center" />
+                <Button x:Name="ResetMeritButton" Click="OnResetMerit" HorizontalAlignment="Center"
+                        ToolTip.Tip="重置功德数" AutomationProperties.Name="重置功德数" Background="Transparent" Padding="0">
+                  <Image Source="/Assets/Yuer.jpg" Width="160" Height="160" Stretch="Uniform" />
+                </Button>
+                <Button x:Name="MeritButton" Classes="primary" Content="敲击木鱼" Click="OnMerit" HorizontalAlignment="Center" />
+                <TextBlock x:Name="MeritFeedback" Text="功德 +1" Opacity="0" HorizontalAlignment="Center" Foreground="#185B53" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+    <Border Grid.Row="2" Background="White" BorderBrush="#E1E7F0" BorderThickness="0,1,0,0" Padding="26,12">
+      <TextBlock x:Name="StatusText" Text="准备就绪" Foreground="#52637A" FontSize="12" TextWrapping="Wrap" MaxHeight="100" />
+    </Border>
+  </Grid>
+</Window>

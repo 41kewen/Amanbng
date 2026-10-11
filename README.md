@@ -8,6 +8,8 @@
 在编写过程中，感谢[ChatGPT](https://chat.openai.com)提供的帮助
 
 # 软件介绍
+现有 Windows 版为 UWP 应用。新增的 **[Linux 桌面版](Linux/README.md)** 使用 Avalonia，保留七个娱乐工具；安装、构建和功能差异见 Linux 说明。
+
 本软件为UWP应用不支持win10以下系统，具体安装步骤请在 https://www.google.com 查看；或者使用安装程序来方便的安装
 
 ## 我们有哪些优势？

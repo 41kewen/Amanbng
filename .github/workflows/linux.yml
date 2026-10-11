@@ -1,0 +1,44 @@
+name: Linux
+
+on:
+  push:
+    paths: ['Linux/**', 'App/Assets/**', 'LICENSE.txt', '.github/workflows/linux.yml']
+  pull_request:
+    paths: ['Linux/**', 'App/Assets/**', 'LICENSE.txt', '.github/workflows/linux.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore
+        run: dotnet restore Linux/Amanbng.Linux.slnx --locked-mode
+      - name: Build
+        run: dotnet build Linux/Amanbng.Linux.slnx -c Release --no-restore
+      - name: Format
+        run: dotnet format Linux/Amanbng.Linux.slnx --verify-no-changes --no-restore
+      - name: Tests
+        run: dotnet test Linux/Amanbng.Linux.slnx -c Release --no-build
+      - name: Check packaging scripts
+        run: for script in Linux/scripts/*.sh; do bash -n "$script"; done
+      - name: Test desktop installation
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y desktop-file-utils libglib2.0-bin
+          python3 Linux/scripts/test-install.py
+      - name: Package
+        run: bash Linux/scripts/publish-linux.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: amanbng-linux-x64
+          path: |
+            artifacts/*.tar.gz
+            artifacts/*.sha256
+          if-no-files-found: error
